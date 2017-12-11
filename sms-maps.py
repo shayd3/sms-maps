@@ -22,6 +22,9 @@ def get_end_destination(gmap_results):
 def get_trip_duration(gmap_results):
     return gmap_results['rows'][0]['elements'][0]['duration']['text']
 
+def get_gmap_status(gmap_results):
+    return gmap_results['status']
+
 def send_text(message):
     sms_message = twil_client.messages.create(
         to="+12159832573",
