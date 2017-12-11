@@ -10,8 +10,17 @@ gmaps = googlemaps.Client(key=gmaps_api_token)
 twil_client = Client(twilio_account_sid, twilio_auth_token)
 
 def get_destination_result(start_destination, end_destination):
-    results = gmaps.distance_matrix(start_destination, end_destination, mode="driving",units="imperial")
+    results = gmaps.distance_matrix(start_destination, end_destination, mode="walking",units="imperial")
     return results
+
+def get_start_destination(gmap_results):
+    return gmap_results['origin_addresses'][0]
+
+def get_end_destination(gmap_results):
+    return gmap_results['destination_addresses'][0]
+
+def get_trip_duration(gmap_results):
+    return gmap_results['rows'][0]['elements'][0]['duration']['text']
 
 def send_text(message):
     sms_message = twil_client.messages.create(
@@ -21,7 +30,8 @@ def send_text(message):
 
 if __name__ == '__main__':
     gmap_results = get_destination_result('517 Stratford Road, Glenolden, PA','1741 Fontain Street, Philadelphia, PA')
-    send_text("From " + gmap_results['origin_addresses'][0] +
-             " to " + gmap_results['destination_addresses'][0] +
-             " will take you " + gmap_results['rows'][0]['elements'][0]['duration']['text'] +
+    import pdb; pdb.set_trace()
+    send_text("From " + get_start_destination(gmap_results) +
+             " to " + get_end_destination(gmap_results) +
+             " will take you " + get_trip_duration(gmap_results) +
              " to drive there!")
