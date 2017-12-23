@@ -47,7 +47,7 @@ def lambda_handler(event, context):
     encoded_results = get_gmaps_results(url)
 
     decoded_results = json.loads(encoded_results.decode('utf-8'))
-    print("Results: " + str(cont))
+    print("Results: " + str(decoded_results))
 
     return '<?xml version=\"1.0\" encoding=\"UTF-8\"?>'\
-          '<Response><Message>From: '+ str(parsed_destinations['formated_start_destination']) + ' To: ' + str(parsed_destinations['formated_end_destination']) +' about ' + str(decoded_results['rows'][0]['elements'][0]['duration']['text']) +' to get their on foot!'+ '</Message></Response>'
+          '<Response><Message>From: '+ str(decoded_results['destination_addresses'][0]) + ' To: ' + str(decoded_results['origin_addresses'][0]) +' will take about ' + str(decoded_results['rows'][0]['elements'][0]['duration']['text']) +' to get their on foot!'+ '</Message></Response>'
