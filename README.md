@@ -1,5 +1,5 @@
 # sms-maps
-
+Code hosted on AWS Lambda. Uses Twilio to handle sending / receiving sms.
 
 # Requirements
 - Twilio
